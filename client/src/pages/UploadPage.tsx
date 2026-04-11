@@ -96,7 +96,7 @@ export default function UploadPage() {
 
       const data = await res.json();
       setProgress(100);
-      navigate(`/result/${data.id}`);
+      navigate(`/auth/${data.id}`);
     } catch (err: any) {
       toast({
         title: "Upload failed",

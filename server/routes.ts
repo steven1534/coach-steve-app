@@ -3,13 +3,20 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { createClient } from "@supabase/supabase-js";
 import {
   createAnalysis,
   getAnalysis,
   getAllAnalyses,
   updateAnalysisStatus,
+  linkUserToAnalysis,
 } from "./storage.js";
 import { analyzeSwing } from "./analyze.js";
+
+const supabaseAdmin = createClient(
+  process.env.VITE_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const uploadsDir = path.join(__dirname, "..", "uploads");
@@ -74,6 +81,36 @@ router.post("/api/analyze", upload.single("video"), async (req, res) => {
   } catch (err: any) {
     console.error("Upload error:", err);
     res.status(500).json({ error: err.message || "Upload failed" });
+  }
+});
+
+router.post("/api/auth/link", async (req, res) => {
+  try {
+    const { analysisId, accessToken } = req.body;
+    if (!analysisId || !accessToken) {
+      return res.status(400).json({ error: "Missing analysisId or accessToken" });
+    }
+
+    const {
+      data: { user },
+      error,
+    } = await supabaseAdmin.auth.getUser(accessToken);
+
+    if (error || !user) {
+      return res.status(401).json({ error: "Invalid or expired token" });
+    }
+
+    const email = user.email || "";
+    const name =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      email;
+
+    linkUserToAnalysis(analysisId, email, name);
+    res.json({ success: true, email, name });
+  } catch (err: any) {
+    console.error("Auth link error:", err);
+    res.status(500).json({ error: "Authentication failed" });
   }
 });
 

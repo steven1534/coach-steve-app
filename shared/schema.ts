@@ -7,6 +7,8 @@ export interface Analysis {
   videoUrl: string | null;
   status: "pending" | "analyzing" | "complete" | "error";
   report: string | null;
+  userEmail: string | null;
+  userName: string | null;
   createdAt: string;
 }
 

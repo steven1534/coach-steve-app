@@ -89,6 +89,11 @@ export default function ResultPage() {
     );
   }
 
+  if (!data.userEmail) {
+    navigate(`/auth/${id}`);
+    return null;
+  }
+
   const sections = data.report ? parseSections(data.report) : {};
 
   const statusColor: Record<string, string> = {

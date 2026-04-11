@@ -21,9 +21,18 @@ db.exec(`
     videoUrl TEXT,
     status TEXT DEFAULT 'pending',
     report TEXT,
+    userEmail TEXT,
+    userName TEXT,
     createdAt TEXT DEFAULT (datetime('now'))
   )
 `);
+
+try {
+  db.exec(`ALTER TABLE analyses ADD COLUMN userEmail TEXT`);
+  db.exec(`ALTER TABLE analyses ADD COLUMN userName TEXT`);
+} catch {
+  // Columns already exist
+}
 
 export function createAnalysis(data: {
   playerName: string;
@@ -70,4 +79,16 @@ export function updateAnalysisStatus(
   } else {
     db.prepare("UPDATE analyses SET status = ? WHERE id = ?").run(status, id);
   }
+}
+
+export function linkUserToAnalysis(
+  id: number,
+  email: string,
+  name: string
+): void {
+  db.prepare("UPDATE analyses SET userEmail = ?, userName = ? WHERE id = ?").run(
+    email,
+    name,
+    id
+  );
 }
