@@ -7,7 +7,6 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
-  Clock,
   Download,
   Share2,
   Check,
@@ -351,13 +350,6 @@ export default function ResultPage() {
                 variant="outline"
               >
                 Analyze Another Swing
-              </Button>
-              <Button
-                onClick={() => navigate("/history")}
-                variant="ghost"
-              >
-                <Clock className="w-4 h-4 mr-2" />
-                View All Reports
               </Button>
             </div>
           </div>

@@ -5,7 +5,6 @@ import {
   CheckCircle2,
   Zap,
   ArrowRight,
-  Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -128,13 +127,7 @@ export default function UploadPage() {
               </div>
             </div>
           </div>
-          <button
-            onClick={() => navigate("/history")}
-            className="flex items-center gap-2 text-[#7A8FA8] hover:text-white transition-colors text-sm"
-          >
-            <Clock className="w-4 h-4" />
-            <span className="hidden sm:inline">Past Reports</span>
-          </button>
+{/* Past Reports hidden from public users */}
         </div>
       </header>
 
