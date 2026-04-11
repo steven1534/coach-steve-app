@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useHashLocation } from "wouter/use-hash-location";
+import { useLocation } from "wouter";
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,7 +14,7 @@ import { LEVEL_LABELS } from "@/lib/utils";
 import type { Analysis } from "@shared/schema";
 
 export default function HistoryPage() {
-  const [, navigate] = useHashLocation();
+  const [, navigate] = useLocation();
 
   const { data: analyses = [], isLoading } = useQuery<Analysis[]>({
     queryKey: ["/api/analyses"],

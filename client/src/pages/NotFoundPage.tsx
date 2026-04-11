@@ -1,8 +1,8 @@
-import { useHashLocation } from "wouter/use-hash-location";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 
 export default function NotFoundPage() {
-  const [, navigate] = useHashLocation();
+  const [, navigate] = useLocation();
 
   return (
     <div className="min-h-screen bg-[#0D1520] flex flex-col items-center justify-center gap-4 text-center px-6">

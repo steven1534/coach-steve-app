@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback } from "react";
 import { useLocation } from "wouter";
-import { useHashLocation } from "wouter/use-hash-location";
 import {
   Upload,
   CheckCircle2,
@@ -18,7 +17,7 @@ import { useToast } from "@/components/ui/toaster";
 import { formatFileSize } from "@/lib/utils";
 
 export default function UploadPage() {
-  const [, navigate] = useHashLocation();
+  const [, navigate] = useLocation();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 

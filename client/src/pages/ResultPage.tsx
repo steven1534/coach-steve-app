@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
-import { useHashLocation } from "wouter/use-hash-location";
+import { useLocation } from "wouter";
 import {
   ArrowLeft,
   Loader2,
@@ -16,7 +16,7 @@ import type { Analysis } from "@shared/schema";
 
 export default function ResultPage() {
   const [, params] = useRoute("/result/:id");
-  const [, navigate] = useHashLocation();
+  const [, navigate] = useLocation();
   const id = params?.id;
 
   const { data, isLoading } = useQuery<Analysis>({
