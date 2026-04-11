@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { useLocation } from "wouter";
@@ -7,17 +8,58 @@ import {
   CheckCircle2,
   AlertCircle,
   Clock,
+  Download,
+  Share2,
+  Check,
+  Link2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CoachLogo } from "@/components/CoachLogo";
 import { ReportSection } from "@/components/ReportSection";
+import { useToast } from "@/components/ui/toaster";
 import { formatMarkdown, parseSections } from "@/lib/utils";
 import type { Analysis } from "@shared/schema";
 
 export default function ResultPage() {
   const [, params] = useRoute("/result/:id");
   const [, navigate] = useLocation();
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
   const id = params?.id;
+
+  const handleExportPDF = () => {
+    window.print();
+  };
+
+  const handleShareLink = async () => {
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Swing Analysis — ${data?.playerName}`,
+          text: `Check out this swing analysis for ${data?.playerName} from Coach Steve`,
+          url: shareUrl,
+        });
+        return;
+      } catch {
+        // User cancelled or share failed, fall through to clipboard
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      toast({ title: "Link copied to clipboard" });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({
+        title: "Couldn't copy link",
+        description: shareUrl,
+        variant: "destructive",
+      });
+    }
+  };
 
   const { data, isLoading } = useQuery<Analysis>({
     queryKey: ["/api/analyses", id],
@@ -72,7 +114,7 @@ export default function ResultPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate("/")}
-              className="text-[#7A8FA8] hover:text-white transition-colors"
+              className="text-[#7A8FA8] hover:text-white transition-colors print:hidden"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -95,7 +137,7 @@ export default function ResultPage() {
             </div>
           </div>
           <div
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 print:hidden"
             style={{ color: statusColor[data.status] || "#7A8FA8" }}
           >
             {statusIcon[data.status]}
@@ -280,8 +322,30 @@ export default function ResultPage() {
               </div>
             )}
 
-            {/* Actions */}
-            <div className="flex gap-3 pt-2">
+            {/* Export & Share */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#253044] print:hidden">
+              <Button
+                onClick={handleExportPDF}
+                className="bg-[#1A2436] border border-[#253044] text-white hover:bg-[#253044] font-bold"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export as PDF
+              </Button>
+              <Button
+                onClick={handleShareLink}
+                className="bg-[#1A2436] border border-[#253044] text-white hover:bg-[#253044] font-bold"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 mr-2 text-[#2A8C45]" />
+                ) : (
+                  <Share2 className="w-4 h-4 mr-2" />
+                )}
+                {copied ? "Link Copied!" : "Share Report"}
+              </Button>
+            </div>
+
+            {/* Navigation */}
+            <div className="flex gap-3 pt-2 print:hidden">
               <Button
                 onClick={() => navigate("/")}
                 variant="outline"

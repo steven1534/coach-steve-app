@@ -104,3 +104,96 @@ h6 {
 .animate-spin {
   animation: spin 1s linear infinite;
 }
+
+/* Print styles for PDF export */
+@media print {
+  body {
+    background-color: #fff !important;
+    color: #1a1a1a !important;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  header {
+    position: static !important;
+    background: #fff !important;
+    border-bottom: 2px solid #C8102E !important;
+    backdrop-filter: none !important;
+  }
+
+  header * {
+    color: #1a1a1a !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .min-h-screen {
+    min-height: auto !important;
+    background: #fff !important;
+  }
+
+  .bg-\[\#0D1520\],
+  .bg-\[\#141C26\],
+  .bg-\[\#1A2436\] {
+    background-color: #f8f9fa !important;
+  }
+
+  .bg-gradient-to-br {
+    background: #fef2f2 !important;
+  }
+
+  .bg-\[\#C8102E\]\/20 {
+    background-color: #fce4e8 !important;
+  }
+
+  .border-\[\#253044\],
+  .border-\[\#C8102E\]\/40 {
+    border-color: #ddd !important;
+  }
+
+  .text-white,
+  .text-\[\#E8EDF5\],
+  .text-\[\#CBD8E8\] {
+    color: #1a1a1a !important;
+  }
+
+  .text-\[\#7A8FA8\],
+  .text-\[\#3D5068\] {
+    color: #666 !important;
+  }
+
+  .text-\[\#C8102E\] {
+    color: #C8102E !important;
+  }
+
+  .report-content,
+  .report-content p,
+  .report-content li {
+    color: #333 !important;
+  }
+
+  .report-content strong {
+    color: #1a1a1a !important;
+  }
+
+  .report-content h2 {
+    color: #1a1a1a !important;
+    border-bottom-color: #ddd !important;
+  }
+
+  video {
+    display: none !important;
+  }
+
+  .rounded-xl {
+    break-inside: avoid;
+  }
+
+  @page {
+    margin: 0.75in;
+    size: letter;
+  }
+}
