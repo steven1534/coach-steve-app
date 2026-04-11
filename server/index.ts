@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -15,7 +16,7 @@ app.use(routes);
 // Serve built frontend in production
 const publicDir = path.join(__dirname, "..", "dist", "public");
 app.use(express.static(publicDir));
-app.get("*", (_req, res) => {
+app.get("/{*splat}", (_req, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
 });
 
