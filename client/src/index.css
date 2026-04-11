@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-red: #c8102e;
+  --color-red-bright: #e8152f;
+  --color-navy: #0d1520;
+  --color-surface: #141c26;
+  --color-surface-2: #1a2436;
+  --color-border: #253044;
+  --color-text: #e8edf5;
+  --color-muted: #7a8fa8;
+  --color-faint: #3d5068;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100dvh;
+  background-color: #0d1520;
+  color: #e8edf5;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.report-content {
+  font-family: var(--font-body);
+  line-height: 1.7;
+  color: #cbd8e8;
+}
+
+.report-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8edf5;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #253044;
+}
+
+.report-content h2:first-child {
+  margin-top: 0;
+}
+
+.report-content p {
+  margin-bottom: 0.75rem;
+  max-width: 72ch;
+}
+
+.report-content ul,
+.report-content ol {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+}
+
+.report-content li {
+  margin-bottom: 0.25rem;
+}
+
+.report-content strong {
+  color: #e8edf5;
+  font-weight: 600;
+}
+
+.report-content hr {
+  border: none;
+  border-top: 1px solid #253044;
+  margin: 1.5rem 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
